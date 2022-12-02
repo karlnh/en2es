@@ -1,14 +1,12 @@
 const translatedText = document.querySelector('#translated-text');
 
-const encodedParams = new URLSearchParams();
-
 let translateThis = "What is your name?";
 
+// taken from rapidapi's text-translator2 documentation
+const encodedParams = new URLSearchParams();
 encodedParams.append("source_language", "en");
 encodedParams.append("target_language", "es");
 encodedParams.append("text", translateThis);
-
-
 const options = {
 	method: 'POST',
 	headers: {
@@ -19,12 +17,21 @@ const options = {
 	body: encodedParams
 };
 
-fetch('https://text-translator2.p.rapidapi.com/translate', options)
+function getString(response) {
+    let dataResponse = response.data.translatedText;
+    
+    console.log(dataResponse);
+    return dataResponse;
+}
+
+function getTranslation() {
+    fetch('https://text-translator2.p.rapidapi.com/translate', options)
 	.then(response => response.json())
-	.then( function (response) {
-    // console.log(response.data.translatedText);
-    let translation = response.data.translatedText;
+	.then(getString(response))
+    .then(function () {
+        console.log(dataResponse);
     })
 	.catch(err => console.error(err));
+}
 
-    translatedText.textContent = translation;
+// translatedText.textContent = translation;
