@@ -3,6 +3,7 @@ const translatedText = document.querySelector('#translated-text');
 let translateThis = "What is your name?";
 
 // taken from rapidapi's text-translator2 documentation
+// parameters for translation API
 const encodedParams = new URLSearchParams();
 encodedParams.append("source_language", "en");
 encodedParams.append("target_language", "es");
@@ -19,9 +20,13 @@ const options = {
 
 function getString(response) {
     let dataResponse = response.data.translatedText;
-    
     console.log(dataResponse);
     return dataResponse;
+}
+
+function stringToArray(string) {
+	let arrayedTranslation = string.split(" ");
+	return arrayedTranslation;
 }
 
 function getTranslation() {
@@ -33,8 +38,17 @@ function getTranslation() {
 	.then(response => getString(response))
     .then(function (dataResponse) {
         console.log(dataResponse);
-		//dislpays the results on the page
-		translatedText.textContent = dataResponse;
+		// create span elements for each word in the translated sentence
+		let translationArray = stringToArray(dataResponse);
+		for (let i = 0; i < translationArray.length; i++) {
+			let wordSpan = document.createElement('span');
+			if (translationArray[i] === translationArray.length-1) {
+				wordSpan.textContent = translationArray[i];
+			} else {
+				wordSpan.textContent = translationArray[i] + " ";
+			}
+			translatedText.append(wordSpan);
+		}
     })
 	.catch(err => console.error(err));
 }
