@@ -26,12 +26,18 @@ function getString(response) {
 
 function getTranslation() {
     fetch('https://text-translator2.p.rapidapi.com/translate', options)
-	.then(response => response.json())
-	.then(getString(response))
-    .then(function () {
+	.then(response => {
+		console.log(response)
+		return response.json()
+	})
+	.then(response => getString(response))
+    .then(function (dataResponse) {
         console.log(dataResponse);
+		//dislpays the results on the page
+		document.querySelector("#translated-text").textContent=dataResponse
     })
 	.catch(err => console.error(err));
 }
+//translate buttons event listener
+document.querySelector("#translate").addEventListener("click",getTranslation)
 
-// translatedText.textContent = translation;
