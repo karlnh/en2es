@@ -8,39 +8,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
-
-<header class="hero">
+    <header class="hero">
     <div class="hero-body">
-        <h1 class="title">
-            en2es
-        </h1>
-    </div>
-</header>
-
-<main>
-    <!-- enter text section -->
-    <section id="textarea">
-        <!-- text input section -->
-        <div>
-            <h2>Translate here</h2>
-            <input placeholder="Translate a sentence...">
-        </div>
-        <!-- button -->
-        <div>
-            <button id="translate">Translate!</button>
-        </div>
-
-    </section>
-    <!-- translated text section -->
-    <section>
-        <!-- translated text output -->
-        <div>
-            <p id="translated-text">Default text</p>
-        </div>
-    </section>
-</main>
+    <div class="has-text-centered">
+    <div class="notification is-primary">
+        <h1 class="title">en2es</h1>
+    </header>
     
+    <main>
+        <!-- enter text section -->
+        <section id="textarea">
+            <div class="has-text-centered">
+            <!-- text input section -->
+            <div class="is-size-3">
+                <h2>Translate here</h2>
+                <textarea class="textarea is-medium" placeholder="enter text here..."></textarea>
+            <!-- button -->
+            <div>
+                <button class="button is-primary">Translate!</button>
+            </div>
+        </section>
+        <!-- translated text section -->
+        <section id="translated-text"> 
+            <div class="has-text-centered">
+                   <h2>Default text</h2>
+        </section>
+    </main>
+
 </body>
 <script src="./assets/js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </html>
