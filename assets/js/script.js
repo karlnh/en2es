@@ -1,5 +1,7 @@
 const translatedText = document.querySelector('#translated-text');
+const translateBtn = document.querySelector("#translate-button")
 
+// TODO: give translateThis the contents of whatever the user wants to translate
 let translateThis = "What is your name?";
 
 // taken from rapidapi's text-translator2 documentation
@@ -17,18 +19,18 @@ const options = {
 	},
 	body: encodedParams
 };
-
+// gets translated text string from data
 function getString(response) {
     let dataResponse = response.data.translatedText;
     console.log(dataResponse);
     return dataResponse;
 }
-
+// splits string by spaces into an array
 function stringToArray(string) {
 	let arrayedTranslation = string.split(" ");
 	return arrayedTranslation;
 }
-
+// fetches API data and sends returned data into a text box
 function getTranslation() {
     fetch('https://text-translator2.p.rapidapi.com/translate', options)
 	.then(response => {
@@ -42,8 +44,10 @@ function getTranslation() {
 		let translationArray = stringToArray(dataResponse);
 		for (let i = 0; i < translationArray.length; i++) {
 			let wordSpan = document.createElement('span');
+			// if the last word, don't add a space
 			if (translationArray[i] === translationArray.length-1) {
 				wordSpan.textContent = translationArray[i];
+			// otherwise add a space
 			} else {
 				wordSpan.textContent = translationArray[i] + " ";
 			}
@@ -53,5 +57,5 @@ function getTranslation() {
 	.catch(err => console.error(err));
 }
 //translate buttons event listener
-document.querySelector("#translate-button").addEventListener("click",getTranslation)
+translateBtn.addEventListener("click",getTranslation)
 
