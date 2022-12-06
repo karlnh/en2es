@@ -34,10 +34,10 @@ function getTranslation() {
     .then(function (dataResponse) {
         console.log(dataResponse);
 		//dislpays the results on the page
-		document.querySelector("#translated-text").textContent=dataResponse
+		translatedText.textContent = dataResponse;
     })
 	.catch(err => console.error(err));
 }
 //translate buttons event listener
-document.querySelector("#translate").addEventListener("click",getTranslation)
+document.querySelector("#translate-button").addEventListener("click",getTranslation)
 
