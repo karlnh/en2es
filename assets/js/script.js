@@ -64,13 +64,6 @@ function getTranslation() {
 				wordSpan.textContent = translationText;
 			}
 			$(wordSpan).addClass("word");
-<<<<<<< HEAD
-
-			log("Translated Text: ", translatedText);
-
-			
-=======
->>>>>>> 09d9f3df6874d063ec71294a84b8e3d325dbb80c
 			translatedText.append(wordSpan);
 		}
     })
@@ -93,6 +86,6 @@ $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
 		console.log(event.target.textContent);
-
 	}
+})
 
