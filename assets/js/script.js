@@ -2,12 +2,13 @@ const translatedText = document.querySelector('#translated-text');
 const translateBtn = document.querySelector("#translate-button");
 const userInputArea = document.querySelector("#text-area");
 
+const log = console.log;
+
 // TODO: give translateThis the contents of whatever the user wants to translate
 let translateThis;
-
 // gets translated text string from data
 function getString(response) {
-    let dataResponse = response.data.translatedText;
+	let dataResponse = response.data.translatedText;
     console.log(dataResponse);
     return dataResponse;
 }
@@ -42,20 +43,31 @@ function getTranslation() {
 	})
 	.then(response => getString(response))
     .then(function (dataResponse) {
-        console.log(dataResponse);
+		console.log(dataResponse);
 		// create span elements for each word in the translated sentence
 		let translationArray = stringToArray(dataResponse);
 		translatedText.replaceChildren(); // empties out last translation
 		for (let i = 0; i < translationArray.length; i++) {
 			let wordSpan = document.createElement('span');
 			// if the last word, don't add a space
+			const translationText = translationArray[i]
+			.toLocaleLowerCase()
+			.replace(
+				/['!','¡','?','¿','.',',',';',"'",'"',':',';','—','(',')','“','”',' ']|_/g,
+				""
+			)
 			if (translationArray[i] === translationArray.length-1) {
-				wordSpan.textContent = translationArray[i];
-			// otherwise add a space
+				wordSpan.textContent = translationText;
+				cons
+				// otherwise add a space
 			} else {
-				wordSpan.textContent = translationArray[i] + " ";
+				wordSpan.textContent = translationText;
 			}
-			wordSpan.addClass("word");
+			$(wordSpan).addClass("word");
+
+			log("Translated Text: ", translatedText);
+
+			
 			translatedText.append(wordSpan);
 		}
     })
@@ -64,11 +76,13 @@ function getTranslation() {
 //translate buttons event listener
 translateBtn.addEventListener("click", getTranslation)
 
-// clickable translation
-$(translatedText).on('click', function (event) {
-	if ($(event.target).hasClass('word')) {
-		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
-		console.log(event.target.textContent);
-	}
+// // clickable translation
+// $(translatedText).on('click', function (event) {
+// 	if ($(event.target).hasClass('word')) {
+// // 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
+		
+// 	}
 
-})
+// })
+
+
