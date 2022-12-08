@@ -55,7 +55,7 @@ function getTranslation() {
 			} else {
 				wordSpan.textContent = translationArray[i] + " ";
 			}
-			wordSpan.addClass("word");
+			$(wordSpan).addClass("word");
 			translatedText.append(wordSpan);
 		}
     })
@@ -69,6 +69,7 @@ $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
 		console.log(event.target.textContent);
+
 	}
 
 })
