@@ -4,6 +4,8 @@ const userInputArea = document.querySelector("#text-area");
 
 const log = console.log;
 
+let textWarningBool = false;
+
 // TODO: give translateThis the contents of whatever the user wants to translate
 let translateThis;
 // gets translated text string from data
@@ -20,6 +22,12 @@ function stringToArray(string) {
 
 // fetches API data and sends returned data into a text box
 function getTranslation() {
+	if (!userInputArea.value || userInputArea.value === " ") {
+		textWarningBool = true;
+		const addText = $('<p id="add-text-warning" style="color: red;">Please add some text to translate.</p>');
+		$('#translate-header').after(addText);
+		return
+	}
 	translateThis = userInputArea.value; // grabs user input from textbox and sets translateThis for the API
 	// taken from rapidapi's text-translator2 documentation
 	// parameters for translation API
@@ -66,6 +74,11 @@ function getTranslation() {
 }
 	// displays character count limit
 	$('textarea').keyup(function() {
+		// checks to see if there is a "no text" error message.
+		if (textWarningBool) { // If so...
+			$("#add-text-warning").empty(); // Clear the message.
+			textWarningBool = false;
+		}
 		let characterCount = $(this).val().length,
 			current = $('#current'),
 			maximum = $('#max'),
