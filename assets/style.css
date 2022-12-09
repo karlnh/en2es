@@ -1,4 +1,64 @@
+#translate-section {
+    margin: 5vh;
+}
+
+#translate-section h2 {
+    margin: 1vh 0;
+}
+
+.container div {
+    margin: 0 1vh;
+}
+
+#text-area {
+    margin: 1vh 0;
+    max-width: 90%;
+    
+}
+
+#translated-text-section {
+    margin: 5vh;
+    padding: 5vh;
+    border-top: 1px solid lightgrey;
+}
+
+#translated-text-section h2 {
+    margin-bottom: 2vh;
+}
+
 span:hover {
     cursor: pointer;
     background-color:#ffe08a!important;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+@media (max-width: 768px) {
+    #translate-section {
+        margin: 4vh 2vh;
+    }
+    #translated-text-section {
+        margin: 4vh 2vh;
+        padding: 3vh;
+    }
+}
+
+@media (max-width: 480px) {
+    #translate-section {
+        margin: 3vh 1vh;
+    }
+    #translated-text-section {
+        margin: 3vh 1vh;
+        padding: 2vh;
+    }
+}
+
+@media (max-width: 360px) {
+    #translate-section {
+        margin: 2vh 0.5vh;
+    }
+    #translated-text-section {
+        margin: 2vh 0.5vh;
+        padding: 1vh;
+    }
 }
