@@ -55,28 +55,36 @@ function getTranslation() {
 			.replace(
 				/['!','¡','?','¿','.',',',';',"'",'"',':',';','—','(',')','“','”',' ']|_/g,
 				""
-			)
-			if (translationArray[i] === translationArray.length-1) {
-				wordSpan.textContent = translationText;
-				cons
-				// otherwise add a space
-			} else {
-				wordSpan.textContent = translationText;
+				)
+				if (translationArray[i] === translationArray.length-1) {
+					wordSpan.textContent = translationText;
+					cons
+					// otherwise add a space
+				} else {
+					wordSpan.textContent = translationText;
+				}
+				$(wordSpan).addClass("word");
+				translatedText.append(wordSpan);
 			}
-			$(wordSpan).addClass("word");
-			translatedText.append(wordSpan);
-		}
-    })
-	.catch(err => console.error(err));
-}
-//translate buttons event listener
-translateBtn.addEventListener("click", getTranslation)
-
-// // clickable translation
-// $(translatedText).on('click', function (event) {
-// 	if ($(event.target).hasClass('word')) {
+		})
+		.catch(err => console.error(err));
+	}
+	// displays character count limit
+	$('textarea').keyup(function() {
+		let characterCount = $(this).val().length,
+			current = $('#current'),
+			maximum = $('#max'),
+			theCount = $('#count');
+		current.text(characterCount);	
+	  });	  
+	//translate buttons event listener
+	translateBtn.addEventListener("click", getTranslation)
+	
+	// // clickable translation
+	// $(translatedText).on('click', function (event) {
+		// 	if ($(event.target).hasClass('word')) {
 // // 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
-		
+
 // 	}
 
 // })
@@ -86,6 +94,6 @@ $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
 		console.log(event.target.textContent);
+		
 	}
 })
-

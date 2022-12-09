@@ -1,3 +1,12 @@
+span:hover {
+    cursor: pointer;
+    background-color:#ffe08a!important;
+}
+
+#count {
+    pointer-events: none; 
+}
+
 #translate-section {
     margin: 5vh;
 }

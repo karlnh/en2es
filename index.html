@@ -20,10 +20,15 @@
         <section id="translate-section">
             <div class="container has-text-centered">
             <!-- text input section -->
-                <div>
-                    <h2 class="title is-size-3">Translate Here</h2>
-                    <textarea id="text-area" class="textarea is-medium" placeholder="enter text here..."></textarea>
+            <div>
+                <h2 class="title is-size-3">Translate Here</h2>
+                <textarea id="text-area" class="textarea is-medium" maxlength="120" placeholder="enter text here..."></textarea>
+                <div id="count" class="has-text-left">
+                    <span>max characters: </span>
+                  <span id="current">0</span>
+                  <span id="max">/ 120</span>
                 </div>
+            </div>
                 <!-- button -->
                 <button class="button is-primary" id="translate-button">Translate!</button>
             </div>
