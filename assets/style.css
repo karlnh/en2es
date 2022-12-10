@@ -51,6 +51,11 @@ span:hover {
         padding: 3vh;
     }
 }
+.modal-card{
+    padding-top: 600px;
+    border-radius: 5px;
+    width: 300px;
+}
 
 @media (max-width: 480px) {
     #translate-section {
