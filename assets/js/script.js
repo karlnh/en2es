@@ -2,6 +2,10 @@ const translatedText = document.querySelector('#translated-text');
 const translateBtn = document.querySelector("#translate-button");
 const userInputArea = document.querySelector("#text-area");
 const wordModal = document.querySelector(".modal");
+let spanishWord = document.getElementById('spanishWord');
+let englishDefinition = document.getElementById('englishDefinition');
+let partOfSpeech = document.getElementById('partOfSpeech');
+let isOffensive = document.getElementById('isOffensive');
 
 // let word = document.querySelectorAll('.word')
 const log = console.log;
@@ -60,7 +64,6 @@ function getTranslation() {
 				)
 				if (translationArray[i] === translationArray.length-1) {
 					wordSpan.textContent = translationText;
-					cons
 					// otherwise add a space
 				} else {
 					wordSpan.textContent = translationText;
@@ -81,29 +84,44 @@ function getTranslation() {
 	  });	  
 	//translate buttons event listener
 	translateBtn.addEventListener("click", getTranslation)
-	
-	// // clickable translation
-	// $(translatedText).on('click', function (event) {
-		// 	if ($(event.target).hasClass('word')) {
-// // 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
-
-// 	}
-
-// })
 
 // clickable translation
 $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
 		$(wordModal).addClass('is-active');
+		fetch('https://dictionaryapi.com/api/v3/references/spanish/json/' + event.target.textContent + '?key=97335289-85ec-42ac-8ab6-d1b79ac4a8df')
+		.then( response => {
+		  if (response.ok) {console.log('Sucessful Fetch')}
+		  else console.log('Fetch Failed')
+		  return response
+		})
+		.then(response => response.json())
+		.then(data => handleData(data))
+		.catch(error => console.log('error')) 
+	   
+		function handleData(data) {
+		 //Modal stuff goes here
+		 spanishWord.textContent = 'Spanish Word: ' + data[0].meta.id;
+		 englishDefinition.textContent = 'Definition in English: ' + data[0].shortdef;
+		 partOfSpeech.textContent = 'Part of Speech: ' + data[0].fl;
+		 offensiveWord.textContent = 'Is the word considered offensive: ' + data[0].meta.offensive;
+
+		  console.log(data);
+		  console.log('Spanish Word: ' + data[0].meta.id)
+		  console.log('Definition in English: ' + data[0].shortdef)
+		  console.log('Part of Speech: ' + data[0].fl)
+		  console.log('Is the word considered offensive: ' + data[0].meta.offensive)
+		
+	   
 		console.log(event.target.textContent);
 		loacalStr(event.target.textContent)
 	}
+}
 })
 
 $(wordModal).on('click', function (event) {
-	if ($(event.target).hasClass("delete")) 
-{
+	if ($(event.target).hasClass("delete")) {
 	$(wordModal).removeClass('is-active')
 }
 	})

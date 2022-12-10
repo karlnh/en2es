@@ -30,16 +30,6 @@ $(translatedText).on('click', function (event) {
 	}
 })
 
-
-//Create list elements
-let ul = document.createElement("ul");
-let li1 = document.createElement("li");
-let li2 = document.createElement("li");
-let li3 = document.createElement("li");
-let li4 = document.createElement("li");
-//Append to modal
-modal.appendChild(ul);
-ul.appendChild(li1,li2,li3,li4);
 //Text Content
 let spanishWord = li1.textContent = 'Spanish Word: ' + data[0].meta.id;
 let englishDefinition = li2.textContent = 'Definition in English: ' + data[0].shortdef;
