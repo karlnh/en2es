@@ -1,6 +1,8 @@
 const translatedText = document.querySelector('#translated-text');
 const translateBtn = document.querySelector("#translate-button");
 const userInputArea = document.querySelector("#text-area");
+const wordModal = document.querySelector(".modal");
+
 // let word = document.querySelectorAll('.word')
 const log = console.log;
 
@@ -93,10 +95,18 @@ function getTranslation() {
 $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
+		$(wordModal).addClass('is-active');
 		console.log(event.target.textContent);
 		loacalStr(event.target.textContent)
 	}
 })
+
+$(wordModal).on('click', function (event) {
+	if ($(event.target).hasClass("delete")) 
+{
+	$(wordModal).removeClass('is-active')
+}
+	})
 
 let saved = document.getElementById("translate-section");
 saved.addEventListener("click", loacalStr);
