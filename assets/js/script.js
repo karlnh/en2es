@@ -2,46 +2,62 @@ const translatedText = document.querySelector('#translated-text');
 const translateBtn = document.querySelector("#translate-button");
 const userInputArea = document.querySelector("#text-area");
 const wordModal = document.querySelector(".modal");
+const wordListEl = document.querySelector('#word-list-ul');
+const savedWordsContainer = document.querySelector('#saved-words-container');
+const clearStorageBtn = document.querySelector('#clear-saved-words-btn');
 let spanishWord = document.getElementById('spanishWord');
 let englishDefinition = document.getElementById('englishDefinition');
 let partOfSpeech = document.getElementById('partOfSpeech');
 let translateThis;
 let textWarningBool = false;
-
 // Initializing localStorage if empty
 let wordsJSON = JSON.parse(localStorage.getItem("words"));
-console.log(wordsJSON);
-if (wordsJSON === null) {
+if (wordsJSON === null) { // if no local storage
+	$(savedWordsContainer).css("visibility", "hidden");
 	wordsJSON = [];
 	localStorage.setItem("words", JSON.stringify(wordsJSON));
-} else {
-	console.log("Loading words...")
-	for (let i = 0; i < wordsJSON.length; i++) {
-		console.log(wordsJSON[i]);
+} else { // if local storage HAS SOMETHING,
+	if (!wordsJSON.length > 0) { // if empty,
+		$(savedWordsContainer).css("visibility", "hidden");
+	} else { // otherwise do stuff
+		$(savedWordsContainer).css("visibility", "visible");
+		for (let i = 0; i < wordsJSON.length; i++) {
+			if (i < 4) {
+				let wordEl = document.createElement('li');
+				wordEl.textContent = wordsJSON[i].word;
+				$(wordListEl).append(wordEl);
+			}
+		$(clearStorageBtn).on('click', function () {
+			localStorage.clear();
+			$(wordListEl).empty();
+		})
+		}
 	}
 }
-
+// Setting localstorage with string input
 function setLocalStorage(string) {
 	const newWord = {
 		word: string
 	};
-	wordsJSON.push(newWord);
-	console.log(wordsJSON);
+	wordsJSON.unshift(newWord); // adds new word to FRONT of wordJSON
+	if (wordsJSON.length > 5) { //6
+		for (let i = wordsJSON.length; i > 5; i--) {
+			wordsJSON.pop();
+		}
+	}
 	localStorage.setItem("words", JSON.stringify(wordsJSON));
 }
-
-// gets translated text string from data
+// Gets translated text string from data
 function getString(response) {
 	let dataResponse = response.data.translatedText;
-    console.log(dataResponse);
     return dataResponse;
 }
-// splits string by spaces into an array
+// Splits string by spaces into an array
 function stringToArray(string) {
 	let arrayedTranslation = string.split(" ");
 	return arrayedTranslation;
 }
-// fetches API data and sends returned data into a text box
+// Fetches API data and sends returned data into a text box
 function getTranslation() {
 	if (!userInputArea.value || userInputArea.value === " ") {
 		textWarningBool = true;
@@ -67,17 +83,14 @@ function getTranslation() {
 	};
     fetch('https://text-translator2.p.rapidapi.com/translate', options)
 	.then(response => {
-		console.log(response)
 		return response.json()
 	})
 	.then(response => getString(response))
     .then(function (dataResponse) {
-		console.log(dataResponse);
 		// create span elements for each word in the translated sentence
 		let translationArray = stringToArray(dataResponse);
 		translatedText.replaceChildren(); // empties out last translation
 		for (let i = 0; i < translationArray.length; i++) {
-			console.log("Adding span...")
 			let wordSpan = document.createElement('span');
 			$(wordSpan).addClass('word');
 			// if the last word, don't add a space
@@ -106,14 +119,12 @@ $('textarea').keyup(function() {
 		theCount = $('#count');
 	current.text(characterCount);	
 	});	  
-//translate buttons event listener
+// Translate button's event listener
 translateBtn.addEventListener("click", getTranslation)
-
 // clickable translation
 $(translatedText).on('click', function (event) {
 	if ($(event.target).hasClass('word')) {
 		let cleanedWord = event.target.textContent.toLocaleLowerCase().replace(/[!¡?¿,.;'":;—()“” ]|_/g,"");
-		console.log(cleanedWord);
 		// PUT THINGS YOU WANT TO HAPPEN AFTER CLICKING A WORD HERE
 		// local storage object
 		setLocalStorage(cleanedWord);
@@ -124,9 +135,9 @@ $(translatedText).on('click', function (event) {
 				$(wordModal).removeClass('is-active');
 			}	
 		});
+		// fetching dictionary entry of clicked word
 		fetch('https://dictionaryapi.com/api/v3/references/spanish/json/' + cleanedWord + '?key=97335289-85ec-42ac-8ab6-d1b79ac4a8df')
 		.then( response => {
-		console.log(response);
 		if (response.ok) {
 			console.log('Sucessful Fetch')
 		}
@@ -138,18 +149,11 @@ $(translatedText).on('click', function (event) {
 		.then(response => response.json())
 		.then(data => handleData(data))
 		.catch(err => console.error(err));
-	   
+	   // putting data into html
 		function handleData(data) {
-		 //Modal stuff goes here
 		 spanishWord.textContent = 'Spanish Word: ' + data[0].meta.id;
 		 englishDefinition.textContent = 'Definition in English: ' + data[0].shortdef;
 		 partOfSpeech.textContent = 'Part of Speech: ' + data[0].fl;
-
-		  console.log(data);
-		  console.log('Spanish Word: ' + data[0].meta.id)
-		  console.log('Definition in English: ' + data[0].shortdef)
-		  console.log('Part of Speech: ' + data[0].fl)
-		// getLocalStorage(event.target.textContent)
 	}
 }
 })
