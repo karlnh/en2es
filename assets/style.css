@@ -42,6 +42,12 @@ span:hover {
     text-decoration-style: dotted;
 }
 
+.modal-card{
+    padding-top: 460px;
+    border-radius: 5px;
+    width: 300px;
+}
+
 @media (max-width: 768px) {
     #translate-section {
         margin: 4vh 2vh;
@@ -50,11 +56,6 @@ span:hover {
         margin: 4vh 2vh;
         padding: 3vh;
     }
-}
-.modal-card{
-    padding-top: 600px;
-    border-radius: 5px;
-    width: 300px;
 }
 
 @media (max-width: 480px) {
