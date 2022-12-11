@@ -6,6 +6,7 @@ let spanishWord = document.getElementById('spanishWord');
 let englishDefinition = document.getElementById('englishDefinition');
 let partOfSpeech = document.getElementById('partOfSpeech');
 let translateThis;
+let textWarningBool = false;
 
 // Initializing localStorage if empty
 let wordsJSON = JSON.parse(localStorage.getItem("words"));
@@ -42,6 +43,12 @@ function stringToArray(string) {
 }
 // fetches API data and sends returned data into a text box
 function getTranslation() {
+	if (!userInputArea.value || userInputArea.value === " ") {
+		textWarningBool = true;
+		const addText = $('<p id="add-text-warning" style="color: red;">Please add some text to translate.</p>');
+		$('#translate-header').after(addText);
+		return
+	}
 	translateThis = userInputArea.value; // grabs user input from textbox and sets translateThis for the API
 	// taken from rapidapi's text-translator2 documentation
 	// parameters for translation API
@@ -88,6 +95,11 @@ function getTranslation() {
 }
 // displays character count limit
 $('textarea').keyup(function() {
+	// checks to see if there is a "no text" error message.
+	if (textWarningBool) { // If so...
+		$("#add-text-warning").empty(); // Clear the message.
+		textWarningBool = false;
+	}
 	let characterCount = $(this).val().length,
 		current = $('#current'),
 		maximum = $('#max'),
