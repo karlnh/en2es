@@ -41,8 +41,11 @@ span:hover {
     text-decoration: underline;
     text-decoration-style: dotted;
 }
+#saved-words-container button {
+    margin: 5vh;
+}
 
-.modal-card{
+.modal-card {
     padding-top: 460px;
     border-radius: 5px;
     width: 300px;
